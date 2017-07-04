@@ -11,7 +11,7 @@ class PhotoPoster : public QObject
     Q_OBJECT
 public:
     explicit PhotoPoster(QObject *parent = nullptr);
-    void post(QString filename);
+    void post(QString filename, QString imgName);
     bool isFinished();
     bool hasError();
     QString status();

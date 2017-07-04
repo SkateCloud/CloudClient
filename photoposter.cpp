@@ -20,7 +20,7 @@ PhotoPoster::PhotoPoster(QObject *parent)
 
 }
 
-void PhotoPoster::post(QString filename)
+void PhotoPoster::post(QString filename, QString imgName)
 {
     QHttpMultiPart *multiPart = new QHttpMultiPart(QHttpMultiPart::FormDataType);
     QHttpPart accountPart;
@@ -32,7 +32,9 @@ void PhotoPoster::post(QString filename)
     passwordPart.setBody("password");
 
     QHttpPart imagePart;
-    imagePart.setHeader(QNetworkRequest::ContentDispositionHeader, QVariant("form-data; name=\"image\"; filename=\"1A.jpg\""));
+    imagePart.setHeader(QNetworkRequest::ContentDispositionHeader, QVariant("form-data; name=\"image\"; filename=\" " + imgName + " \""));
+
+    qDebug()<< filename;
 
     QFile *file = new QFile(filename);
     file->open(QIODevice::ReadOnly);

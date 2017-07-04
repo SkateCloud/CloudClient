@@ -69,15 +69,19 @@ display_label->setPixmap(QPixmap::fromImage(image));
 void MainWindow::captureImage()
 {
 //截图
-fileName = "/Users/mac/qtclient.jpg";
-camera_image_capture->capture(fileName);
-
+fileName = "G://QTimages/";
+qint32 number = camera_image_capture->capture(fileName);
+fileName = fileName + "IMG_0000000";
+fileName.append(QString::number(number, 10));
+fileName.append(QString(".jpg"));
+imgName = "IMG_0000000" + QString::number(number, 10) + ".jpg";
+//qDebug()<<fileName;
 }
 
 void MainWindow::UpLoadForm(QString Path,QMap<QString,QString> params,QString fileFormName,QFile *uploadFile,QString newFileName)
 {
     PhotoPoster *poster = new PhotoPoster();
-    poster->post("G://1.jpg");
+    poster->post(fileName, imgName);
 
     connect(poster, SIGNAL(responseFinished(QJsonObject)), this, SLOT(showResult(QJsonObject)));
 }

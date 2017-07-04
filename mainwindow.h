@@ -55,6 +55,7 @@ private:
     QString fileName;
     QString account;
     QString password;
+    QString imgName;
 
 };
 
