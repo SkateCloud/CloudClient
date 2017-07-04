@@ -59,6 +59,7 @@ timer = new QTimer(this);
 connect(timer, SIGNAL(timeout()), this, SLOT(timerUpdate()));
 timer->start(1000*5);
 
+QStringList ipRange;
 // 检测是否链接正常
 foreach( ip, ipRange )
     {

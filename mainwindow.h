@@ -36,10 +36,13 @@ private slots:
     void saveImage();
     void captureImage();
     void translateLanguage();
+    void cancelAutoUpload();
     void displayImage(int id, QImage image);
     void stopUpload();
     void UpLoadForm(QString Path,QMap<QString,QString> params,QString fileFormName,QFile *uploadFile,QString newFileName);
     void showResult(QJsonObject jsonObject);
+    void timerUpdate();
+    bool isFuzzy（QString filename);
 private:
     Ui::MainWindow *ui;
 
@@ -56,6 +59,11 @@ private:
     QString account;
     QString password;
     QString imgName;
+
+    QTimer *timer;
+
+    const QString CONFIG_PATH = "G://QTimages/";
+    bool AUTO_UPLOAD = true;
 
 };
 
