@@ -5,6 +5,9 @@
 #include <QHttpMultiPart>
 #include <QScopedPointer>
 #include <QNetworkProxy>
+#include <QMessageBox>
+#include <QObject>
+#include <QJsonArray>
 
 #include "photoposter.h"
 
@@ -23,8 +26,6 @@ capture_button = new QPushButton();
 save_button = new QPushButton();
 exit_button = new QPushButton();
 display_label = new QLabel();
-networkManager = new QNetworkAccessManager();
-
 QGridLayout *mainlayout = new QGridLayout(this);
 
 widget->setLayout(mainlayout);
@@ -76,7 +77,9 @@ camera_image_capture->capture(fileName);
 void MainWindow::UpLoadForm(QString Path,QMap<QString,QString> params,QString fileFormName,QFile *uploadFile,QString newFileName)
 {
     PhotoPoster *poster = new PhotoPoster();
-    poster->post("/Users/mac/qtclient.jpg");
+    poster->post("G://1.jpg");
+
+    connect(poster, SIGNAL(responseFinished(QJsonObject)), this, SLOT(showResult(QJsonObject)));
 }
 
 
@@ -93,8 +96,6 @@ QFile *file = new QFile();
 
 QString newFileName="1A.png";
 UpLoadForm(path,params_send,fileFormName,file,newFileName);
-
-
 }
 
 void MainWindow::stopUpload() { }
@@ -107,12 +108,9 @@ void MainWindow::stopUpload() { }
  * newFileName: 服务器保存该文件时文件名
  */
 
-
-void MainWindow::onFileUploadFinished(QNetworkReply *reply) {
-    if (reply->error() != QNetworkReply::NoError) {
-        qDebug() << reply->errorString();
-    }
-    else {
-        qDebug() << "No error";
-    }
+void MainWindow::showResult(QJsonObject jsonObject)
+{
+    QMessageBox b;
+    b.setText(jsonObject.value("result").toArray().at(0).toString());
+    b.exec();
 }

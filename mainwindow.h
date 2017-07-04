@@ -30,16 +30,16 @@ class MainWindow : public QMainWindow
 public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
+signals:
 
 private slots:
-    void onFileUploadFinished(QNetworkReply *reply);
     void saveImage();
     void captureImage();
     void translateLanguage();
     void displayImage(int id, QImage image);
     void stopUpload();
     void UpLoadForm(QString Path,QMap<QString,QString> params,QString fileFormName,QFile *uploadFile,QString newFileName);
-
+    void showResult(QJsonObject jsonObject);
 private:
     Ui::MainWindow *ui;
 
@@ -55,10 +55,6 @@ private:
     QString fileName;
     QString account;
     QString password;
-
-    QNetworkAccessManager *networkManager;
-    QNetworkReply *reply;
-
 
 };
 
